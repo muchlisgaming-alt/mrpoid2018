@@ -22,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-
 /**
  * 
  * @author yichou 2014-07-30
@@ -127,7 +126,8 @@ public class MyFavoriteFragment extends MyListFragment implements
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		SubMenu subOptions = menu.addSubMenu(R.id.mi_group_mrplist, R.id.mi_refresh, 1, R.string.refresh);
-		subOptions.setIcon(getHomeActivity().isLightTheme() ? R.drawable.ic_refresh_drak : R.drawable.ic_refresh);
+		// DIKOMENTARI: resource ic_refresh dan ic_refresh_drak tidak ada
+		// subOptions.setIcon(getHomeActivity().isLightTheme() ? R.drawable.ic_refresh_drak : R.drawable.ic_refresh);
 		subOptions.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 	}
 	
