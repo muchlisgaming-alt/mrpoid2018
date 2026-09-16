@@ -18,7 +18,7 @@ package com.mrpoid.mrplist.view;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v4.view.PagerAdapter;
+import androidx.viewpager.widget.PagerAdapter; // <--- SUDAH DIPERBAIKI
 import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.SparseArray;
