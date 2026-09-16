@@ -18,9 +18,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
+import androidx.loader.app.LoaderManager; // <--- DIUBAH
+import androidx.loader.app.LoaderManager.LoaderCallbacks; // <--- DIUBAH
+import androidx.loader.content.AsyncTaskLoader; // <--- DIUBAH
+import androidx.loader.content.Loader; // <--- DIUBAH
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -53,7 +54,8 @@ public class LocalmrpFragment extends Fragment
 		super.onCreate(savedInstanceState);
 		
 		mAdapter = new MpListAdapter(getActivity());
-		mLoader = (MyLoader) getLoaderManager().initLoader(2000, null, this);
+		// DIUBAH: getLoaderManager() menjadi LoaderManager.getInstance(this)
+		mLoader = (MyLoader) LoaderManager.getInstance(this).initLoader(2000, null, this);
 		
 		setHasOptionsMenu(true);
 	}
@@ -143,7 +145,8 @@ public class LocalmrpFragment extends Fragment
 		}
 		
 		public void load() {
-			onContentChanged();
+			// DIUBAH: onContentChanged() menjadi forceLoad()
+			forceLoad();
 		}
 		
 		public void findMrpFiles(File path, List<MpFile> mCacheList) {
@@ -246,7 +249,8 @@ public class LocalmrpFragment extends Fragment
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		SubMenu subOptions = menu.addSubMenu(R.id.mi_group_mrplist, R.id.mi_refresh, 1, R.string.refresh);
-		subOptions.setIcon(getHomeActivity().isLightTheme() ? R.drawable.ic_refresh_drak : R.drawable.ic_refresh);
+		// DIKOMENTARI: resource ic_refresh dan ic_refresh_drak tidak ada
+		// subOptions.setIcon(getHomeActivity().isLightTheme() ? R.drawable.ic_refresh_drak : R.drawable.ic_refresh);
 		subOptions.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 	}
 	
@@ -261,4 +265,4 @@ public class LocalmrpFragment extends Fragment
 		
 		return super.onOptionsItemSelected(item);
 	}
-}
+	}
