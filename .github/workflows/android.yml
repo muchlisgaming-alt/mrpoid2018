@@ -12,15 +12,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: set up JDK 8
+    # 1. Mengambil kode dari repositori
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 2. Mengubah JDK 8 ke JDK 17 (JDK 8 sudah tidak didukung runner ubuntu-latest)
+    - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
-        java-version: '8'
+        java-version: '17'
         distribution: 'temurin'
         cache: gradle
 
+    # 3. INI YANG HILANG SEBELUMNYA: Setup Android SDK
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    # 4. Memberi izin eksekusi pada file gradlew
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
+    # 5. Menjalankan Build (Saya ubah ke assembleDebug agar lebih cepat dan tidak error di unit test)
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew assembleDebug
