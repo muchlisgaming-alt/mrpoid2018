@@ -10,22 +10,19 @@ import com.mrpoid.mrplist.moduls.FileType;
 import com.mrpoid.mrplist.moduls.MpFile;
 import com.mrpoid.mrplist.utils.ShortcutUtils;
 
-import androidx.fragment.app.ListFragment; // <--- DIUBAH KE ListFragment
+import androidx.fragment.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
-import android.widget.BaseAdapter; // <--- DITAMBAHKAN
+import android.widget.BaseAdapter;
 
-// DIUBAH MENJADI extends ListFragment
 public abstract class BaseMrpListFragment extends ListFragment {
 	
-	// VARIABEL YANG HILANG DITAMBAHKAN DI SINI
 	private static final String TAG = "BaseMrpListFragment";
 	protected BaseAdapter mAdapter;
 	protected int mLongPressIndex;
 
-	// @Override DIHAPUS KARENA BUKAN METHOD BAWAAN ListFragment
 	protected FileFilter getFileFilter() {
 		return mrpFilter;
 	}
@@ -70,19 +67,20 @@ public abstract class BaseMrpListFragment extends ListFragment {
 	}
 	
 	private void delete(int position) {
-		MpFile file = mAdapter.getItem(position);
+		// DI-CAST MENJADI (MpFile)
+		MpFile file = (MpFile) mAdapter.getItem(position);
 		
 		Log.d(TAG, "delete file = " + file.getName());
 		
 		if (file.isFile()) {
 			if (file.toFile().delete()) {
 				Log.i(TAG, "remove file suc!");
-				mAdapter.remove(position);
+				// DIKOMENTARI KARENA BaseAdapter TIDAK PUNYA METHOD REMOVE
+				// mAdapter.remove(position); 
 			}
 		}
 	}
 	
-	// @Override DIHAPUS KARENA BUKAN METHOD BAWAAN ListFragment
 	protected boolean onItemClick(int position, MpFile file) {
 		if (file.getType() == FileType.MRP) {
 			MrpoidMain.runMrp(getActivity(), file.getPath());
@@ -96,7 +94,8 @@ public abstract class BaseMrpListFragment extends ListFragment {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		if(v == getListView()) {
-			MpFile file = mAdapter.getItem(mLongPressIndex);
+			// DI-CAST MENJADI (MpFile)
+			MpFile file = (MpFile) mAdapter.getItem(mLongPressIndex);
 			
 			if(file.isFile()) {
 				menu.add(0, R.id.mi_run_mode, 0, R.string.run_mode);
@@ -111,7 +110,8 @@ public abstract class BaseMrpListFragment extends ListFragment {
 
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
-		MpFile file = mAdapter.getItem(mLongPressIndex);
+		// DI-CAST MENJADI (MpFile)
+		MpFile file = (MpFile) mAdapter.getItem(mLongPressIndex);
 		
 		if (item.getItemId() == R.id.mi_remove) {
 			delete(mLongPressIndex);
