@@ -10,7 +10,7 @@ import com.mrpoid.mrplist.moduls.FileType;
 import com.mrpoid.mrplist.moduls.MpFile;
 import com.mrpoid.mrplist.utils.ShortcutUtils;
 
-import androidx.androidx.fragment.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
