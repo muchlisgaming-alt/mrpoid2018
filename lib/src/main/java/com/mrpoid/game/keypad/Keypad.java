@@ -26,7 +26,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Xml;
 import android.view.MotionEvent;
