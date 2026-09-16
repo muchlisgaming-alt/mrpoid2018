@@ -1,25 +1,34 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    namespace 'com.mrpoid.mrpliset' // <--- WAJIB DITAMBAHKAN UNTUK AGP 8+
+    compileSdkVersion 34 // <--- DIUBAH DARI 27
+    // buildToolsVersion dihapus saja, otomatis mengikuti compileSdk
 
     defaultConfig {
         applicationId "com.mrpoid.mrpliset"
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 34 // <--- DIUBAH DARI 26
+        versionCode 1
+        versionName "1.0"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
         }
+    }
+    
+    // Tambahan untuk kompatibilitas Java 17
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 dependencies {
     implementation project(':lib')
-//    implementation files('libs/common.jar')
-    implementation 'com.android.support:appcompat-v7:23.+'
+    // DIUBAH DARI com.android.support MENJADI ANDROIDX
+    implementation 'androidx.appcompat:appcompat:1.6.1' 
 }
