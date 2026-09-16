@@ -32,8 +32,8 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # ===== AUTO-FIX SEMUA IMPORT ANDROIDX =====
-    - name: Auto-fix semua import AndroidX
+    # ===== AUTO-FIX SEMUA IMPORT ANDROIDX (JAVA) =====
+    - name: Auto-fix semua import AndroidX (Java)
       run: |
         find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.LoaderManager/androidx.loader.app.LoaderManager/g' {} +
         find . -name "*.java" -exec sed -i 's/android\.support\.v4\.content\.AsyncTaskLoader/androidx.loader.content.AsyncTaskLoader/g' {} +
@@ -65,7 +65,20 @@ jobs:
         find . -name "*.java" -exec sed -i 's/android\.support\.v7/androidx.appcompat/g' {} +
         find . -name "*.java" -exec sed -i 's/android\.support\.annotation/androidx.annotation/g' {} +
         find . -name "*.java" -exec sed -i 's/androidx\.androidx/androidx/g' {} +
-    # ==========================================
+
+    # ===== AUTO-FIX SEMUA TAG XML (LAYOUT) =====
+    - name: Auto-fix semua tag XML AndroidX
+      run: |
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v4\.widget\.DrawerLayout/androidx.drawerlayout.widget.DrawerLayout/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v4\.widget/androidx.drawerlayout.widget/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v4\.view\.ViewPager/androidx.viewpager.widget.ViewPager/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v4\.view\.PagerAdapter/androidx.viewpager.widget.PagerAdapter/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v4\.view/androidx.core.view/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v7\.widget/androidx.appcompat.widget/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v7\.app/androidx.appcompat.app/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v4\.app/androidx.fragment.app/g' {} +
+        find . -name "*.xml" -exec sed -i 's/android\.support\.v4/androidx.legacy/g' {} +
+        find . -name "*.xml" -exec sed -i 's/androidx\.androidx/androidx/g' {} +
 
     - name: Build with Gradle
       run: ./gradlew assembleDebug
