@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.ListFragment; // <--- IMPORT BARU
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,14 +40,14 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Stack;
 
-
 /**
  * 文件浏览
  * 
  * @author Yichou 2013-12-19
  *
  */
-public abstract class BaseFileFragment extends MyListFragment implements OnItemLongClickListener {
+// DIUBAH MENJADI extends ListFragment
+public abstract class BaseFileFragment extends ListFragment implements OnItemLongClickListener {
 	static final String TAG = "BaseListFragment";
 	private static final char PATH_SEP = File.separatorChar;
 
@@ -95,7 +96,6 @@ public abstract class BaseFileFragment extends MyListFragment implements OnItemL
 		pushPath("/"); //root目录
 
 		File sdPath = Environment.getExternalStorageDirectory();
-//		pushPath(sdPath.getParent()); //sd卡所在目录
         curPath = sdPath.getPath();
 	}
 	
@@ -138,7 +138,6 @@ public abstract class BaseFileFragment extends MyListFragment implements OnItemL
 	}
 	
 	public void reload() {
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(!isRootDir());
         getSupportActionBar().setSubtitle(curPath);
 
         load();
@@ -170,11 +169,6 @@ public abstract class BaseFileFragment extends MyListFragment implements OnItemL
 
         @Override
         public void onResult(Object o) {
-            /**
-             * 真正返回给UI层的列表，不能在后台线程修改，
-             * 我们不知道 加载器会不会对 这个 list 重用
-             * 所有我们复制他的数据到一个安全的地方
-             */
             mAdapter.setData(cacheList);
 		    getListView().setSelectionFromTop(curP, curY);
         }
@@ -215,12 +209,8 @@ public abstract class BaseFileFragment extends MyListFragment implements OnItemL
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//		SubMenu subOptions = menu.addSubMenu(0, R.id.mi_menu, 1, R.string.menu);
-//		subOptions.setIcon(getHomeActivity().isLightTheme() ? R.drawable.ic_menu : R.drawable.ic_menu_dark);
-//		subOptions.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
 		SubMenu subOptions = menu.addSubMenu(R.id.mi_group_mrplist, R.id.mi_refresh, 1, R.string.refresh);
-		subOptions.setIcon(R.drawable.ic_refresh);
+		// subOptions.setIcon(R.drawable.ic_refresh); // <--- DIKOMENTARI KARENA GAMBAR TIDAK ADA
 		subOptions.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		
 		subOptions = menu.addSubMenu(R.id.mi_group_mrplist, R.id.mi_download, 1, R.string.download);
