@@ -9,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-
-
 /**
  * 本地应用列表
  * 
@@ -23,7 +21,8 @@ public class ExplorerFragment extends BaseMrpListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mAdapter.setColors(new int[]{0xfff0f0f0, 0x80f0f0f0, 0xa000f000});
+		// DIKOMENTARI: Method setColors tidak ada di BaseAdapter
+		// mAdapter.setColors(new int[]{0xfff0f0f0, 0x80f0f0f0, 0xa000f000});
 	}
 	
 	@Override
@@ -32,7 +31,7 @@ public class ExplorerFragment extends BaseMrpListFragment {
 		
 	}
 
-	@Override
+	// @Override SUDAH DIHAPUS
 	protected void initRootPath() {
 //		pushPath(Emulator.getInstance().getVmFullPath(), 0);	
 	}
