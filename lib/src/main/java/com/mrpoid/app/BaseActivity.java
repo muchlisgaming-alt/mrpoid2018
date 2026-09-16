@@ -15,7 +15,8 @@
  */
 package com.mrpoid.app;
 
-import android.support.v7.app.AppCompatActivity;
+// INI DIUBAH: dari android.support.v7 menjadi androidx
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.edroid.common.utils.SdkUtils;
 
@@ -23,7 +24,8 @@ import com.edroid.common.utils.SdkUtils;
  * @author YYichou 2014-3-29
  *
  */
-class BaseActivity extends AppCompatActivity {
+// Saya tambahkan 'public abstract' agar lebih aman diakses
+public abstract class BaseActivity extends AppCompatActivity {
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onPause()
