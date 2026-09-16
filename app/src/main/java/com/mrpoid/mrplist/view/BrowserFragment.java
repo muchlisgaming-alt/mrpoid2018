@@ -102,18 +102,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		checkCache();
 	}
 	
-	/**
-	 * 先写下思路
-	 * 
-	 * 先指向E界某个固定页面，里面添加各大mrp站
-	 * 
-	 * 点击每个链接，进入他们的mrp下载专区
-	 * 
-	 * 监测mrp文件下载，下完提示运行
-	 * 
-	 * 同时运行 多个mrp 逻辑
-	 */
-	
 	public void loadUrl(String url) {
 		mWebView.loadUrl(url);
 	}
@@ -197,9 +185,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		return root;
 	}
 	
-	/**
-	 * webview 链接长按操作
-	 */
 	final MenuItem.OnMenuItemClickListener webMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
 
 		@Override
@@ -251,7 +236,7 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 			public void onReceivedTitle(WebView view, String title) {
 				super.onReceivedTitle(view, title);
 				
-				if(getActivity() != null) //有空指针异常
+				if(getActivity() != null)
 					((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
 			}
 
@@ -265,12 +250,10 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 				return super.onJsConfirm(view, url, message, result);
 			}
 			
-			// For Android > 4.1.1
 			public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
 				openFileChooser(uploadMsg, acceptType);
 			}
 	          
-			// For Android 3.0+
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
                 mUploadMessage = uploadMsg;
                 Intent i = new Intent(Intent.ACTION_GET_CONTENT);
@@ -281,8 +264,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
                 		FILECHOOSER_RESULTCODE);
             }
 
-            // The undocumented magic method override
-            // Eclipse will swear at you if you try to put @Override here
             public void openFileChooser(ValueCallback<Uri> uploadMsg) {
                 mUploadMessage = uploadMsg;
                 Intent i = new Intent(Intent.ACTION_GET_CONTENT);
@@ -296,13 +277,11 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		
 		mWebView.setWebViewClient(new WebViewClient() {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//				mLoadingView.setVisibility(View.VISIBLE);
 				view.loadUrl(url);
 				return true;
 			}
 		});
 		
-		//上下文菜单
 		mWebView.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 			
 			@Override
@@ -321,7 +300,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 					
 					Log.i("extrea", result.getExtra());
 
-					//如果 不设置监听器，会发生到附属 Activity
 					menu.add(0, ID_SHARE, 0, "分享")
 						.setIntent(i)
 						.setOnMenuItemClickListener(webMenuItemClickListener);
@@ -337,7 +315,7 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 					menu.add(0, ID_MARK, 0, "增加到书签")
 						.setIntent(i)
 						.setOnMenuItemClickListener(webMenuItemClickListener);
-				} else if (resultType == HitTestResult.IMAGE_TYPE) { //图片处理
+				} else if (resultType == HitTestResult.IMAGE_TYPE) {
 					Log.i("image type", "ture");
 					Intent i = new Intent();
 					MenuItem item = menu.add(0, 1, 0, "OPEN");
@@ -350,10 +328,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		});
 		
 		mWebView.setDownloadListener(this);
-//		mWebView.setScrollBarStyle(0);
-//		mWebView.getSettings().setSupportZoom(true);
-//		mWebView.getSettings().setUseWideViewPort(true);
-//		mWebView.getSettings().setUserAgentString();
 	}
 	
 	private void checkCache() {
@@ -381,7 +355,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		initWebView();
 		
 		mWebView.getSettings().setJavaScriptEnabled(true);
-//		mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 		mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 
 		mWebView.loadUrl(START_PAGE_URL);
@@ -421,17 +394,10 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 			fragment.show(getFragmentManager(), "downloadDialog");
 			fragment.start(getActivity(), url, path.getAbsolutePath());
 		} else {
-//			UIUtils.toastMessage(getActivity(), "已经下载！");
 			handleFile(getFragmentManager(), path.getAbsolutePath());
 		}
 	}
 	
-	/**
-	 * 编辑书签
-	 * 
-	 * @param title
-	 * @param url
-	 */
 	public void editMarket(String title, String url) {
 		MarkEditDialogFragment fragment = new MarkEditDialogFragment();
 		
@@ -443,19 +409,13 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		fragment.show(getFragmentManager(), "markDialog");
 	}
 	
-	/**
-	 * 文件处理对话框
-	 * 
-	 * @author YYichou
-	 *
-	 */
 	public static class FileDialogFragment extends DialogFragment implements OnClickListener {
 		View contentView;
 		EditText editText;
 		TextView textView1;
 		ApkResources apkResources;
 		String path;
-		int fileType; //1apk 2mrp
+		int fileType;
 		
 		
 		private void handle() {
@@ -548,12 +508,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		}
 	}
 	
-	/**
-	 * 书签编辑
-	 * 
-	 * @author YYichou
-	 *
-	 */
 	public static class MarkEditDialogFragment extends DialogFragment {
 		View contentView;
 		EditText editText1, editText2;
@@ -613,7 +567,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 			public void onClick(DialogInterface dialog, int which) {
 				if(which == ProgressDialog.BUTTON_NEGATIVE) {
 					downloader.cancel();
-//					mDialog.cancel();
 				} else if (which == ProgressDialog.BUTTON_POSITIVE) {
 					mDialog.dismiss();
 				}
@@ -650,8 +603,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 				
 				@Override
 				public void onProgress(long cur, byte prog) {
-					System.out.println("tid=" + Thread.currentThread().getId());
-
 					if(mDialog != null && mDialog.isShowing()) {
 						mDialog.setProgress((int) cur);
 					}
@@ -666,8 +617,6 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 				
 				@Override
 				public void onFinish() {
-					System.out.println("tid=" + Thread.currentThread().getId());
-					
 					toast("下载完成!");
 
 					if(mDialog != null && mDialog.isShowing()) {
@@ -711,7 +660,7 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		System.out.println(mimetype);
 		
 		
-		if("application/vnd.android.package-archive".equals(mimetype)) { //apk 
+		if("application/vnd.android.package-archive".equals(mimetype)) {
 			startDownload("apk", url);
 		} else if (matchEnd(url, "mrp")) {
 			startDownload("mrp", url);
@@ -721,29 +670,20 @@ public class BrowserFragment extends Fragment implements DownloadListener, OnCli
 		}
 	}
 	
+	// ====== INI DIA YANG DIUBAH: switch menjadi if-else ======
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.iv_btn1:
+		int id = v.getId();
+		if (id == R.id.iv_btn1) {
 			mWebView.goBack();
-			break;
-		case R.id.iv_btn3:
+		} else if (id == R.id.iv_btn3) {
 			mWebView.reload();
-			break;
-		case R.id.iv_btn2:
+		} else if (id == R.id.iv_btn2) {
 			mWebView.goForward();
-			break;
-			
-		case R.id.iv_btn4:
+		} else if (id == R.id.iv_btn4) {
 			showMarkMenu();
-			break;
-
-		case R.id.iv_btnHome:
+		} else if (id == R.id.iv_btnHome) {
 			loadUrl(HOME_PAGE_URL);
-			break;
-
-		default:
-			break;
 		}
 	}
 }
