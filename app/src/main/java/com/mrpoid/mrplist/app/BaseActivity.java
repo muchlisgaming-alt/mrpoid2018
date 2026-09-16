@@ -3,7 +3,7 @@ package com.mrpoid.mrplist.app;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBarActivity;
+// BARIS INI DIHAPUS: import androidx.appcompat.app.ActionBarActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
