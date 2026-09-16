@@ -10,10 +10,10 @@ import android.os.Environment;
  */
 public class DownloadedFragment extends BaseMrpListFragment {
 
-	@Override
+	// @Override SUDAH DIHAPUS
 	protected void initRootPath() {
 		String sd = Environment.getExternalStorageDirectory().getAbsolutePath();
 		
-		// pushPath(sd + "/Download"); // <-- TANDAI KOMENTAR BARIS INI SEMENTARA
+		// pushPath(sd + "/Download");
 	}
 }
