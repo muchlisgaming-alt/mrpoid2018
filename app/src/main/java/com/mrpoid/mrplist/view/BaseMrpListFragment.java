@@ -10,15 +10,22 @@ import com.mrpoid.mrplist.moduls.FileType;
 import com.mrpoid.mrplist.moduls.MpFile;
 import com.mrpoid.mrplist.utils.ShortcutUtils;
 
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment; // <--- DIUBAH KE ListFragment
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
+import android.widget.BaseAdapter; // <--- DITAMBAHKAN
 
-public abstract class BaseMrpListFragment extends Fragment {
+// DIUBAH MENJADI extends ListFragment
+public abstract class BaseMrpListFragment extends ListFragment {
 	
-	@Override
+	// VARIABEL YANG HILANG DITAMBAHKAN DI SINI
+	private static final String TAG = "BaseMrpListFragment";
+	protected BaseAdapter mAdapter;
+	protected int mLongPressIndex;
+
+	// @Override DIHAPUS KARENA BUKAN METHOD BAWAAN ListFragment
 	protected FileFilter getFileFilter() {
 		return mrpFilter;
 	}
@@ -28,10 +35,10 @@ public abstract class BaseMrpListFragment extends Fragment {
 		@Override
 		public boolean accept(File f) {
 			if (f.isDirectory()) {
-				return  true; // PreferencesProvider.Interface.General.getShowDir(true)? isContainMrp(f) : false;
+				return  true;
 			} else if (f.isFile()) {
 				String name = f.getName();
-				int ss = name.lastIndexOf('.'); //最后一个 .
+				int ss = name.lastIndexOf('.');
 				if(ss != -1) {
 					return name.regionMatches(true, ss, ".mrp", 0, 4);
 				}
@@ -41,12 +48,6 @@ public abstract class BaseMrpListFragment extends Fragment {
 		}
 	};
 
-	/**
-	 * 检测一个文件夹是否包含MRP文件
-	 * 
-	 * @param path
-	 * @return
-	 */
 	public boolean isContainMrp(File path) {
 		return true;
 	}
@@ -58,10 +59,10 @@ public abstract class BaseMrpListFragment extends Fragment {
 			return false;
 
 		for (File f : files) {
-			if (f.isFile()) // 是文件就是 MRP
+			if (f.isFile())
 				return true;
 
-			if (isContainMrp(f)) // 递归子目录
+			if (isContainMrp(f))
 				return true;
 		}
 
@@ -78,16 +79,12 @@ public abstract class BaseMrpListFragment extends Fragment {
 				Log.i(TAG, "remove file suc!");
 				mAdapter.remove(position);
 			}
-		} else {
-			// 设置该目录为排除
 		}
 	}
 	
-	@Override
+	// @Override DIHAPUS KARENA BUKAN METHOD BAWAAN ListFragment
 	protected boolean onItemClick(int position, MpFile file) {
 		if (file.getType() == FileType.MRP) {
-//			MrpRunner.runMrp(getActivity(), file.getPath());
-			
 			MrpoidMain.runMrp(getActivity(), file.getPath());
 			
 			HomeActivity.addToFavorate(file.getPath());
