@@ -1,7 +1,7 @@
 package com.mrpoid.mrplist.app;
 
 import com.mrpoid.mrpliset.R;
-import com.edroid.common.utils.UmengUtils;
+// import com.edroid.common.utils.UmengUtils; // DIKOMENTARI
 
 import android.Manifest;
 import android.content.Intent;
@@ -19,23 +19,26 @@ import android.view.WindowManager;
 public class WelcomeActivity extends AppCompatActivity {
 
 	void go() {
-		SharedPreferences sp = getPreferences(0);
-		if (!sp.getBoolean("showLogo", true)) {
-			startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
-			finish();
-			return;
-		}
-
-		sp.edit().putBoolean("showLogo", false).commit();
-
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
+		try {
+			SharedPreferences sp = getPreferences(0);
+			if (!sp.getBoolean("showLogo", true)) {
 				startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
 				finish();
+				return;
 			}
-		}, 3000);
+
+			sp.edit().putBoolean("showLogo", false).commit();
+
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
+					finish();
+				}
+			}, 3000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	void gp3() {
@@ -63,7 +66,12 @@ public class WelcomeActivity extends AppCompatActivity {
 	}
 
 	void gen(String[] perms, int code) {
-        ActivityCompat.requestPermissions(this, perms, code);
+        try {
+            ActivityCompat.requestPermissions(this, perms, code);
+        } catch (Exception e) {
+            e.printStackTrace();
+            go(); // Jika request permission gagal, langsung lanjut
+        }
     }
 
 	boolean isgen(String[] perms) {
@@ -91,7 +99,7 @@ public class WelcomeActivity extends AppCompatActivity {
 				if(isok(grantResults)) {
 					gp2();
 				} else {
-					gp1();
+					gp2(); // Ubah dari gp1() agar tidak infinite loop
 				}
 				break;
 			}
@@ -100,16 +108,12 @@ public class WelcomeActivity extends AppCompatActivity {
 				if(isok(grantResults)) {
 					gp3();
 				} else {
-					gp2();
+					gp3(); // Ubah dari gp2() agar tidak infinite loop
 				}
 				break;
 			}
 			case 3: {
-				if(isok(grantResults)) {
-                    go();
-				} else {
-					gp3();
-				}
+				go(); // Langsung lanjut, baik permission diberikan atau tidak
 				break;
 			}
 		}
@@ -121,31 +125,27 @@ public class WelcomeActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
 		setContentView(R.layout.activity_welcome);
 
-		boolean ok = true;
-
 		if (Build.VERSION.SDK_INT >= 23) {
 			gp1();
-		} else
-		    go();
+		} else {
+			go();
+		}
 	}
 
 	@Override
 	protected void onPause() {
-		UmengUtils.onPause(this);
-
+		// UmengUtils.onPause(this); // DIKOMENTARI
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		UmengUtils.onResume(this);
+		// UmengUtils.onResume(this); // DIKOMENTARI
 	}
 }
