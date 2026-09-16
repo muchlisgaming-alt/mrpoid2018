@@ -3,7 +3,6 @@ package com.mrpoid.mrplist.app;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-// BARIS INI DIHAPUS: import androidx.appcompat.app.ActionBarActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
@@ -15,14 +14,15 @@ public class BaseActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		// DITAMBAHKAN PENGECEKAN NULL untuk mencegah crash
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setHomeButtonEnabled(true);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 		
 		if(Build.VERSION.SDK_INT == VERSION_CODES.KITKAT) {
 //			getWindow().addFlags(WindowManager.LayoutParams.)
 		}
-		
-		
 	}
 	
 	@Override
