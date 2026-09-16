@@ -10,13 +10,13 @@ import com.mrpoid.mrplist.moduls.FileType;
 import com.mrpoid.mrplist.moduls.MpFile;
 import com.mrpoid.mrplist.utils.ShortcutUtils;
 
-import androidx.appcompat.app.ActionBarActivity;
+import androidx.androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 
-public abstract class BaseMrpListFragment extends BaseFileFragment {
+public abstract class BaseMrpListFragment extends Fragment {
 	
 	@Override
 	protected FileFilter getFileFilter() {
