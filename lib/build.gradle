@@ -1,12 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    // PENTING: Ganti 'com.mrpoid.lib' dengan nama package asli yang ada di 
+    // file lib/src/main/AndroidManifest.xml (baris package="...")
+    namespace 'com.mrpoid' 
+    
+    compileSdkVersion 34 // <--- DIUBAH DARI 27
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 34 // <--- DIUBAH DARI 26
 
         ndk {
             // Specifies the ABI configurations of your native
@@ -22,6 +25,9 @@ android {
         }
     }
 
+    // Tambahkan ini agar GitHub Actions mengunduh versi NDK yang stabil
+    ndkVersion "25.1.8937393"
+
     // Encapsulates your external native build configurations.
     externalNativeBuild {
 
@@ -35,8 +41,15 @@ android {
             path 'src/main/jni/Android.mk'
         }
     }
+
+    // Tambahkan ini untuk kompatibilitas Java 17
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
-    api 'com.android.support:appcompat-v7:23.+'
+    // DIUBAH DARI com.android.support MENJADI ANDROIDX
+    api 'androidx.appcompat:appcompat:1.6.1'
 }
