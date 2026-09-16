@@ -31,7 +31,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
-import androidx.drawerlayout.widget.DrawerLayout; // <--- DIUBAH DARI android.support.v4
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -59,7 +59,7 @@ import com.mrpoid.mrplist.moduls.MrpInfo;
 import com.mrpoid.mrplist.moduls.MyFavoriteManager;
 import com.mrpoid.mrplist.moduls.PreferencesProvider;
 import com.mrpoid.mrplist.utils.MrpUtils;
-import com.mrpoid.mrplist.view.BaseMrpListFragment; // <--- DIUBAH DARI BaseFileFragment
+import com.mrpoid.mrplist.view.BaseMrpListFragment;
 import com.mrpoid.mrplist.view.DownloadedFragment;
 import com.mrpoid.mrplist.view.ExplorerFragment;
 import com.mrpoid.mrplist.view.LocalmrpFragment;
@@ -94,7 +94,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 	};
 	
 	private MyFavoriteFragment favoriteFmg;
-	// DIUBAH DARI BaseFileFragment MENJADI BaseMrpListFragment
 	private BaseMrpListFragment listFmg;
 	private DownloadedFragment downloadedFragment;
 	private LocalmrpFragment localmrpFragment;
@@ -115,9 +114,12 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		
 		setContentView(R.layout.activity_home);
 		
-		getSupportActionBar().setDisplayUseLogoEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setElevation(0);
+		// DITAMBAHKAN PENGECEKAN NULL
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setDisplayUseLogoEnabled(true);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setElevation(0);
+		}
 		
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
@@ -315,9 +317,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		againToExit = false;
 		
 		if (needRefresh) {
-			// DIKOMENTARI: listFmg.reload() tidak ada di BaseMrpListFragment
-			// if (listFmg != null)
-			// 	listFmg.reload();
 			needRefresh = false;
 		}
 	}
@@ -376,7 +375,10 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 	}
 	
 	public void setSubTitle(String subTitle) {
-		getSupportActionBar().setSubtitle(subTitle);
+		// DITAMBAHKAN PENGECEKAN NULL
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setSubtitle(subTitle);
+		}
 	}
 	
 	@Override
@@ -449,17 +451,24 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		}
 
 		public void init() {
-			mActionBar.setDisplayHomeAsUpEnabled(true);
-			mActionBar.setHomeButtonEnabled(true);
+			// DITAMBAHKAN PENGECEKAN NULL
+			if (mActionBar != null) {
+				mActionBar.setDisplayHomeAsUpEnabled(true);
+				mActionBar.setHomeButtonEnabled(true);
+			}
 			mTitle = mDrawerTitle = getActivity().getTitle();
 		}
 
 		public void onDrawerClosed() {
-			mActionBar.setTitle(mTitle);
+			if (mActionBar != null) {
+				mActionBar.setTitle(mTitle);
+			}
 		}
 
 		public void onDrawerOpened() {
-			mActionBar.setTitle(mDrawerTitle);
+			if (mActionBar != null) {
+				mActionBar.setTitle(mDrawerTitle);
+			}
 		}
 
 		public void setTitle(CharSequence title) {
