@@ -14,6 +14,6 @@ public class DownloadedFragment extends BaseMrpListFragment {
 	protected void initRootPath() {
 		String sd = Environment.getExternalStorageDirectory().getAbsolutePath();
 		
-		pushPath(sd + "/Download");
+		// pushPath(sd + "/Download"); // <-- TANDAI KOMENTAR BARIS INI SEMENTARA
 	}
 }
