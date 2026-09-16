@@ -31,7 +31,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout; // <--- DIUBAH DARI android.support.v4
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -59,7 +59,7 @@ import com.mrpoid.mrplist.moduls.MrpInfo;
 import com.mrpoid.mrplist.moduls.MyFavoriteManager;
 import com.mrpoid.mrplist.moduls.PreferencesProvider;
 import com.mrpoid.mrplist.utils.MrpUtils;
-import com.mrpoid.mrplist.view.BaseFileFragment;
+import com.mrpoid.mrplist.view.BaseMrpListFragment; // <--- DIUBAH DARI BaseFileFragment
 import com.mrpoid.mrplist.view.DownloadedFragment;
 import com.mrpoid.mrplist.view.ExplorerFragment;
 import com.mrpoid.mrplist.view.LocalmrpFragment;
@@ -94,7 +94,8 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 	};
 	
 	private MyFavoriteFragment favoriteFmg;
-	private BaseFileFragment listFmg;
+	// DIUBAH DARI BaseFileFragment MENJADI BaseMrpListFragment
+	private BaseMrpListFragment listFmg;
 	private DownloadedFragment downloadedFragment;
 	private LocalmrpFragment localmrpFragment;
 	private boolean needRefresh = false;
@@ -109,26 +110,14 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
     
     @Override
 	protected void onCreate(Bundle arg0) {
-//		int themeColor = PreferencesProvider.Interface.General.getThemeColor(0);
-//		if(themeColor == 1) {
 			setTheme(R.style.AppTheme);
-//		} else {
-//			setTheme(R.style.Theme_AppCompat);
-//		}
     	super.onCreate(arg0);
 		
 		setContentView(R.layout.activity_home);
 		
-//		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//		if(toolbar != null)
-//			setSupportActionBar(toolbar);
-		
 		getSupportActionBar().setDisplayUseLogoEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setElevation(0);
-//		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0x80222222));
-		
-//		PAGE_TITLES = getResources().getStringArray(R.array.page_titles);
 		
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
@@ -139,14 +128,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		slidingTabLayout.setSelectedIndicatorColors(0xffffffff);
 		slidingTabLayout.setDistributeEvenly(true);
 		slidingTabLayout.setViewPager(mPager);
-		
-//		mPageIndicator = (TitlePageIndicator)findViewById(R.id.indicator);
-//		mPageIndicator.setViewPager(mPager);
-//		mPageIndicator.setOnPageChangeListener(this);
-//		mPageIndicator.setFooterIndicatorStyle(IndicatorStyle.Underline);
-//		mPageIndicator.setOnCenterItemClickListener(this);
-//		mPageIndicator.setCurrentItem(0);
-//		mPageIndicator.setFooterColor(0xf0e1e5ee);
  
 		//创建
 		favoriteFmg = new MyFavoriteFragment();
@@ -157,15 +138,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		//drawlayout
 		initLeftDrawer();
 		initBackground(); 
-		
-//		runOnUiThread(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				File file = new File(Environment.getExternalStorageDirectory(), "mythroad/240x320/gwy.mrp");
-//				MrpoidMain.runMrp(getActivity(), file.getPath());
-//			}
-//		});
 	}
     
     private void initLeftDrawer() {
@@ -197,8 +169,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 	
 	private void initBackground() {
 		int img = PreferencesProvider.Interface.General.getThemeImage(DEFAULT_BACKGROUND_INDEX);
-//		if(img != 0)
-//			setBackground(img, true);
 	}
 	
 	private void setBackground(int img) {
@@ -247,15 +217,11 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 
 		@Override
 		public Fragment getItem(int arg0) {
-			/*if(arg0 == 0) {
-				return localmrpFragment;
-			} else */if(arg0 == 0) {
+			if(arg0 == 0) {
 				return favoriteFmg;
 			} else if(arg0 == 1) {
 				return listFmg;
-			} /*else if(arg0 == 3) {
-				return downloadedFragment;
-			}*/
+			}
 			
 			return null;
 		}
@@ -349,9 +315,9 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		againToExit = false;
 		
 		if (needRefresh) {
-			// 刷新列表
-			if (listFmg != null)
-				listFmg.reload();
+			// DIKOMENTARI: listFmg.reload() tidak ada di BaseMrpListFragment
+			// if (listFmg != null)
+			// 	listFmg.reload();
 			needRefresh = false;
 		}
 	}
@@ -488,20 +454,10 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 			mTitle = mDrawerTitle = getActivity().getTitle();
 		}
 
-		/**
-		 * When the drawer is closed we restore the action bar state reflecting
-		 * the specific contents in view.
-		 */
 		public void onDrawerClosed() {
 			mActionBar.setTitle(mTitle);
 		}
 
-		/**
-		 * When the drawer is open we set the action bar to a generic title. The
-		 * action bar should only contain data relevant at the top level of the
-		 * nav hierarchy represented by the drawer, as the rest of your content
-		 * will be dimmed down and non-interactive.
-		 */
 		public void onDrawerOpened() {
 			mActionBar.setTitle(mDrawerTitle);
 		}
