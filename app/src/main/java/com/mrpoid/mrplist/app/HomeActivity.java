@@ -50,7 +50,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.edroid.common.utils.UmengUtils;
+// import com.edroid.common.utils.UmengUtils; // DIKOMENTARI
 import com.mrpoid.MrpoidMain;
 import com.mrpoid.app.HelpActivity;
 import com.mrpoid.app.MrpoidSettingsActivity;
@@ -302,8 +302,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 	
 	@Override
 	protected void onPause() {
-		UmengUtils.onPause(getActivity());
-
+		// UmengUtils.onPause(getActivity()); // DIKOMENTARI
 		super.onPause();
 	}
 
@@ -312,7 +311,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		super.onResume();
 		Log.i(TAG, "onResume");
 
-		UmengUtils.onResume(getActivity());
+		// UmengUtils.onResume(getActivity()); // DIKOMENTARI
 
 		againToExit = false;
 		
