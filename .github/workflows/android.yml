@@ -32,5 +32,40 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    # ===== AUTO-FIX SEMUA IMPORT ANDROIDX =====
+    - name: Auto-fix semua import AndroidX
+      run: |
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.LoaderManager/androidx.loader.app.LoaderManager/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.content\.AsyncTaskLoader/androidx.loader.content.AsyncTaskLoader/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.content\.Loader/androidx.loader.content.Loader/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.widget\.DrawerLayout/androidx.drawerlayout.widget.DrawerLayout/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.ListFragment/androidx.fragment.app.ListFragment/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.FragmentManager/androidx.fragment.app.FragmentManager/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.DialogFragment/androidx.fragment.app.DialogFragment/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.Fragment/androidx.fragment.app.Fragment/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.NotificationCompat/androidx.core.app.NotificationCompat/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.app\.ActivityCompat/androidx.core.app.ActivityCompat/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.content\.ContextCompat/androidx.core.content.ContextCompat/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.content\.FileProvider/androidx.core.content.FileProvider/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.content\.LocalBroadcastManager/androidx.localbroadcastmanager.content.LocalBroadcastManager/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.view\.ViewPager/androidx.viewpager.widget.ViewPager/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.view\.PagerAdapter/androidx.viewpager.widget.PagerAdapter/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.view/androidx.core.view/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.widget/androidx.core.widget/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4\.util/androidx.core.util/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v4/androidx.legacy/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.app\.AppCompatActivity/androidx.appcompat.app.AppCompatActivity/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.app\.AlertDialog/androidx.appcompat.app.AlertDialog/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.app\.ActionBarActivity/androidx.appcompat.app.AppCompatActivity/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.app\.ActionBar/androidx.appcompat.app.ActionBar/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.app/androidx.appcompat.app/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.widget/androidx.appcompat.widget/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.view/androidx.appcompat.view/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7\.graphics/androidx.appcompat.graphics/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.v7/androidx.appcompat/g' {} +
+        find . -name "*.java" -exec sed -i 's/android\.support\.annotation/androidx.annotation/g' {} +
+        find . -name "*.java" -exec sed -i 's/androidx\.androidx/androidx/g' {} +
+    # ==========================================
+
     - name: Build with Gradle
       run: ./gradlew assembleDebug
