@@ -1,37 +1,15 @@
-name: Android CI
-
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    # 1. Mengambil kode dari repositori
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
-    # 2. Mengubah JDK 8 ke JDK 17 (JDK 8 sudah tidak didukung runner ubuntu-latest)
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
-
-    # 3. INI YANG HILANG SEBELUMNYA: Setup Android SDK
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-
-    # 4. Memberi izin eksekusi pada file gradlew
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
-    # 5. Menjalankan Build (Saya ubah ke assembleDebug agar lebih cepat dan tidak error di unit test)
-    - name: Build with Gradle
-      run: ./gradlew assembleDebug
+# 3. Setup Android SDK
+- name: Setup Android SDK
+  uses: android-actions/setup-android@v3
+  with:
+    # Lewati instalasi paket default 'tools' yang bermasalah
+    packages: ''
+# 4. Instal paket yang dibutuhkan secara manual
+- name: Install required SDK packages
+  run: sdkmanager "platform-tools" "build-tools;34.0.0" "platforms;android-34"
+# 5. Memberi izin eksekusi pada file gradlew
+- name: Grant execute permission for gradlew
+  run: chmod +x gradlew
+# 6. Menjalankan Build
+- name: Build with Gradle
+  run: ./gradlew assembleDebug      run: ./gradlew assembleDebug
