@@ -19,7 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.ListFragment; // <--- IMPORT BARU
+import androidx.fragment.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,7 +46,6 @@ import java.util.Stack;
  * @author Yichou 2013-12-19
  *
  */
-// DIUBAH MENJADI extends ListFragment
 public abstract class BaseFileFragment extends ListFragment implements OnItemLongClickListener {
 	static final String TAG = "BaseListFragment";
 	private static final char PATH_SEP = File.separatorChar;
@@ -138,7 +137,12 @@ public abstract class BaseFileFragment extends ListFragment implements OnItemLon
 	}
 	
 	public void reload() {
-        getSupportActionBar().setSubtitle(curPath);
+        // ===== DITAMBAHKAN PENGECEKAN NULL =====
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setSubtitle(curPath);
+        }
+        // =======================================
 
         load();
 	}
@@ -210,7 +214,7 @@ public abstract class BaseFileFragment extends ListFragment implements OnItemLon
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		SubMenu subOptions = menu.addSubMenu(R.id.mi_group_mrplist, R.id.mi_refresh, 1, R.string.refresh);
-		// subOptions.setIcon(R.drawable.ic_refresh); // <--- DIKOMENTARI KARENA GAMBAR TIDAK ADA
+		// subOptions.setIcon(R.drawable.ic_refresh); // DIKOMENTARI KARENA GAMBAR TIDAK ADA
 		subOptions.getItem().setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		
 		subOptions = menu.addSubMenu(R.id.mi_group_mrplist, R.id.mi_download, 1, R.string.download);
