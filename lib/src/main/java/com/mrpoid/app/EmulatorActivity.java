@@ -164,7 +164,13 @@ public class EmulatorActivity extends BaseActivity implements Handler.Callback, 
 			appsp.edit().putString(MrpoidMain.INTENT_KEY_ENTRY_ACTIVITY, activity).commit();
 		}
 		
-		if(path == null || activity == null) {
+		// ===== FIX: Jika activity null, pakai default APP_ACTIVITY_NAME =====
+		if(activity == null) {
+			activity = APP_ACTIVITY_NAME;
+		}
+		// ===================================================================
+		
+		if(path == null) {
 			finish();
 			Toast.makeText(this, "启动文件丢失！", Toast.LENGTH_SHORT).show();
 			return;
