@@ -59,7 +59,7 @@ import com.mrpoid.mrplist.moduls.MrpInfo;
 import com.mrpoid.mrplist.moduls.MyFavoriteManager;
 import com.mrpoid.mrplist.moduls.PreferencesProvider;
 import com.mrpoid.mrplist.utils.MrpUtils;
-import com.mrpoid.mrplist.view.BaseMrpListFragment;
+import com.mrpoid.mrplist.view.BaseFileFragment; // <--- DIUBAH
 import com.mrpoid.mrplist.view.DownloadedFragment;
 import com.mrpoid.mrplist.view.ExplorerFragment;
 import com.mrpoid.mrplist.view.LocalmrpFragment;
@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 	};
 	
 	private MyFavoriteFragment favoriteFmg;
-	private BaseMrpListFragment listFmg;
+	private BaseFileFragment listFmg; // <--- DIUBAH
 	private DownloadedFragment downloadedFragment;
 	private LocalmrpFragment localmrpFragment;
 	private boolean needRefresh = false;
@@ -114,7 +114,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		
 		setContentView(R.layout.activity_home);
 		
-		// DITAMBAHKAN PENGECEKAN NULL
 		if (getSupportActionBar() != null) {
 			getSupportActionBar().setDisplayUseLogoEnabled(true);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -374,7 +373,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 	}
 	
 	public void setSubTitle(String subTitle) {
-		// DITAMBAHKAN PENGECEKAN NULL
 		if (getSupportActionBar() != null) {
 			getSupportActionBar().setSubtitle(subTitle);
 		}
@@ -450,7 +448,6 @@ public class HomeActivity extends AppCompatActivity implements OnClickListener,
 		}
 
 		public void init() {
-			// DITAMBAHKAN PENGECEKAN NULL
 			if (mActionBar != null) {
 				mActionBar.setDisplayHomeAsUpEnabled(true);
 				mActionBar.setHomeButtonEnabled(true);
