@@ -15,12 +15,9 @@ public class FileManagerActivity extends BaseActivity {
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.replace(android.R.id.content, new ExplorerFragment(), "main").commit();
 
-		getSupportActionBar().setElevation(0);
-		
-//		getActionBar()
-//		getWindow().setBackgroundDrawableResource(R.drawable.wp5);
-//		getWindow().setBackgroundDrawable(new ColorDrawable(0xffffffff));
-		
-//		setTranslucentNavigation(true);
+		// DITAMBAHKAN PENGECEKAN NULL agar tidak crash
+		if (getSupportActionBar() != null) {
+			getSupportActionBar().setElevation(0);
+		}
 	}
 }
