@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'com.mrpoid.mrpliset' // <--- WAJIB DITAMBAHKAN UNTUK AGP 8+
-    compileSdkVersion 34 // <--- DIUBAH DARI 27
-    // buildToolsVersion dihapus saja, otomatis mengikuti compileSdk
-
+    namespace 'com.mrpoid.mrpliset'
+    compileSdkVersion 34
+    
     defaultConfig {
         applicationId "com.mrpoid.mrpliset"
         minSdkVersion 17
-        targetSdkVersion 34 // <--- DIUBAH DARI 26
+        targetSdkVersion 28 // <--- DIUBAH DARI 34 KE 28 (untuk mematikan Scoped Storage)
         versionCode 1
         versionName "1.0"
     }
@@ -20,7 +19,6 @@ android {
         }
     }
     
-    // Tambahan untuk kompatibilitas Java 17
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -29,6 +27,5 @@ android {
 
 dependencies {
     implementation project(':lib')
-    // DIUBAH DARI com.android.support MENJADI ANDROIDX
     implementation 'androidx.appcompat:appcompat:1.6.1' 
 }
