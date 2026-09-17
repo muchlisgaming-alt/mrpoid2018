@@ -15,25 +15,21 @@ import android.view.View;
  * @author Yichou 2013-12-19
  *
  */
-public class ExplorerFragment extends BaseMrpListFragment {
+public class ExplorerFragment extends BaseFileFragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		// DIKOMENTARI: Method setColors tidak ada di BaseAdapter
-		// mAdapter.setColors(new int[]{0xfff0f0f0, 0x80f0f0f0, 0xa000f000});
 	}
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
 	}
 
-	// @Override SUDAH DIHAPUS
+	@Override
 	protected void initRootPath() {
-//		pushPath(Emulator.getInstance().getVmFullPath(), 0);	
+		// Bisa dikosongkan atau diisi path default
 	}
 	
 	@Override
@@ -41,8 +37,17 @@ public class ExplorerFragment extends BaseMrpListFragment {
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
-//	@Override
-//	protected FileFilter getFileFilter() {
-//		return null;
-//	}
+	// WAJIB: Method abstrak dari BaseFileFragment
+	@Override
+	protected FileFilter getFileFilter() {
+		return BaseMrpListFragment.mrpFilter;
+	}
+
+	// WAJIB: Method abstrak dari BaseFileFragment
+	@Override
+	protected boolean onItemClick(int position, MpFile file) {
+		com.mrpoid.MrpoidMain.runMrp(getActivity(), file.getPath());
+		com.mrpoid.mrplist.app.HomeActivity.addToFavorate(file.getPath());
+		return true;
+	}
 }
